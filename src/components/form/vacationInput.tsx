@@ -1,14 +1,15 @@
 "use client";
 
+import vacationAvailableDate from "@/utils/vacationAvailableDate";
 import { ChangeEvent, InputHTMLAttributes, useState } from "react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-	name: string;
-	label: string;
+interface VacationInputsProps extends InputHTMLAttributes<HTMLInputElement> {
+	hireDate: string;
 }
 
-export function VacationInputs() {
+export function VacationInputs({ hireDate }: VacationInputsProps) {
 	const [vacationQuantity, setVacationQuantity] = useState(1);
+	const vacationDate = vacationAvailableDate(hireDate);
 
 	const onChance = (e: ChangeEvent<HTMLInputElement>) => {
 		const newVacationQuantity = parseInt(e.target.value);
