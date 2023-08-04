@@ -5,6 +5,7 @@ import { Dispatch, InputHTMLAttributes, SetStateAction, useState } from "react";
 import { VacationDate } from "../interfaces/vacationDate";
 import handlerVacationDate from "@/utils/handlerVacationDate";
 import handlerVacationQuantity from "@/utils/handlerVacationQuantity";
+import dayjs from "dayjs";
 
 interface VacationInputsProps extends InputHTMLAttributes<HTMLInputElement> {
 	hireDate: string;
@@ -19,9 +20,29 @@ export function VacationInputs({
 }: VacationInputsProps) {
 	const vacationMinDate = vacationMinimumDate(hireDate);
 	const [vacationQuantity, setVacationQuantity] = useState(1);
-	const [availableDates, setAvailableDates] = useState([vacationMinDate]);
+	const [countVacationDays, setCountVacationDays] = useState(0);
+	const [availableEndDates, setAvailableEndDates] = useState([]);
+	const [availableStartDates, setAvailableStartDates] = useState([
+		vacationMinDate,
+	]);
 
-	console.log(availableDates);
+	const handlerEndVacationDay = (index: number) => {
+		if (vacationQuantity === 1) {
+			const dateFormat = dayjs(vacationDate[index].start);
+			const availableDate = dateFormat.add(30, "days");
+			return availableDate.format("YYYY-MM-DD");
+		}
+
+		const diverences = vacationDate.map((v) => {
+			const start = dayjs(v.start);
+			const end = dayjs(v.end);
+
+			const differenceInDays = end.diff(start, "day");
+			return differenceInDays;
+		});
+
+		console.log(diverences);
+	};
 
 	return (
 		<div className="flex flex-col">
@@ -40,8 +61,8 @@ export function VacationInputs({
 						setVacationQuantity,
 						vacationDate,
 						setVacationDate,
-						availableDates,
-						setAvailableDates
+						availableStartDates,
+						setAvailableStartDates
 					)}
 				/>
 			</div>
@@ -53,13 +74,15 @@ export function VacationInputs({
 							name="start"
 							className="h-12 text-xl bg-slate-200 px-3 py-2 focus:outline-none focus:ring-2"
 							type="date"
-							min={availableDates[index]}
+							min={availableStartDates[index]}
+							disabled={availableStartDates[index] === undefined}
 							onChange={handlerVacationDate(
 								index,
 								vacationDate,
 								setVacationDate,
-								availableDates,
-								setAvailableDates
+								availableStartDates,
+								setAvailableStartDates,
+								setCountVacationDays
 							)}
 						/>
 						<p className="itens-center self-center"> ~ </p>
@@ -67,13 +90,15 @@ export function VacationInputs({
 							name="end"
 							className="h-12 text-xl bg-slate-200 px-3 py-2 focus:outline-none focus:ring-2"
 							type="date"
-							min={availableDates[index]}
+							disabled={vacationDate[index].start === ""}
+							min={vacationDate[index].start}
 							onChange={handlerVacationDate(
 								index,
 								vacationDate,
 								setVacationDate,
-								availableDates,
-								setAvailableDates
+								availableStartDates,
+								setAvailableStartDates,
+								setCountVacationDays
 							)}
 						/>
 					</div>
