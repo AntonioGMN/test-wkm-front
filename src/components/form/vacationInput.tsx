@@ -20,24 +20,7 @@ export function VacationInputs({
 }: VacationInputsProps) {
 	const vacationMinDate = vacationMinimumDate(hireDate);
 	const [vacationPeriodsQuantity, setVacationPeriodsQuantity] = useState(1);
-	const [countVacationDays, setCountVacationDays] = useState(0);
-	const [availableEndDates, setAvailableEndDates] = useState([]);
-
-	// const handlerEndVacationDay = (index: number) => {
-	// 	if (vacationQuantity === 1) {
-	// 		const dateFormat = dayjs(vacationDate[index].start);
-	// 		const availableDate = dateFormat.add(30, "days");
-	// 		return availableDate.format("YYYY-MM-DD");
-	// 	}
-
-	// 	const diverences = vacationDate.map((v) => {
-	// 		const start = dayjs(v.start);
-	// 		const end = dayjs(v.end);
-
-	// 		const differenceInDays = end.diff(start, "day");
-	// 		return differenceInDays;
-	// 	});
-	// };
+	const [countVacationDays, setCountVacationDays] = useState([]);
 
 	const handlerDisableStartInput = (index: number) => {
 		if (index == 0) return false;
@@ -50,6 +33,18 @@ export function VacationInputs({
 		if (index == 0) return vacationMinDate;
 
 		return vacationDate[index - 1].end;
+	};
+
+	const handlerMaxEndDate = (index: number) => {
+		const daysOnVocation = countVacationDays.reduce((a, c) => a + c, 0);
+		const daysRemainingOfVacation = 29 - daysOnVocation;
+
+		const maxDate = dayjs(vacationDate[index].start).add(
+			daysRemainingOfVacation,
+			"days"
+		);
+
+		return maxDate.format("YYYY-MM-DD");
 	};
 
 	return (
@@ -86,7 +81,6 @@ export function VacationInputs({
 								index,
 								vacationDate,
 								setVacationDate,
-
 								setCountVacationDays
 							)}
 						/>
@@ -97,11 +91,11 @@ export function VacationInputs({
 							type="date"
 							disabled={vacationDate[index].start === ""}
 							min={vacationDate[index].start}
+							max={handlerMaxEndDate(index)}
 							onChange={handlerVacationDate(
 								index,
 								vacationDate,
 								setVacationDate,
-
 								setCountVacationDays
 							)}
 						/>

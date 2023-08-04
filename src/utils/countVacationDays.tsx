@@ -6,13 +6,10 @@ const countVacationDay = (
 	vacationDate: VacationDate[],
 	setCountVacationDays: Dispatch<SetStateAction<any>>
 ) => {
-	const countedDays = vacationDate.map((v) => {
-		if (v.start === undefined || v.end === undefined) return 0;
+	const countedDays = vacationDate.map(({ start, end }) => {
+		if (start === "" || end === "") return 0;
 
-		const start = dayjs(v.start);
-		const end = dayjs(v.end);
-
-		const differenceInDays = end.diff(start, "day") + 1;
+		const differenceInDays = dayjs(end).diff(dayjs(start), "day") + 1;
 		return differenceInDays;
 	});
 
