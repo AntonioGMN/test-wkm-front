@@ -17,8 +17,11 @@ export function VacationInputs({
 	vacationDate,
 	setVacationDate,
 }: VacationInputsProps) {
-	const [vacationQuantity, setVacationQuantity] = useState(1);
 	const vacationMinDate = vacationMinimumDate(hireDate);
+	const [vacationQuantity, setVacationQuantity] = useState(1);
+	const [availableDates, setAvailableDates] = useState([vacationMinDate]);
+
+	console.log(availableDates);
 
 	return (
 		<div className="flex flex-col">
@@ -36,7 +39,9 @@ export function VacationInputs({
 						vacationQuantity,
 						setVacationQuantity,
 						vacationDate,
-						setVacationDate
+						setVacationDate,
+						availableDates,
+						setAvailableDates
 					)}
 				/>
 			</div>
@@ -48,16 +53,28 @@ export function VacationInputs({
 							name="start"
 							className="h-12 text-xl bg-slate-200 px-3 py-2 focus:outline-none focus:ring-2"
 							type="date"
-							min={vacationMinDate}
-							onChange={handlerVacationDate(index, vacationDate, setVacationDate)}
+							min={availableDates[index]}
+							onChange={handlerVacationDate(
+								index,
+								vacationDate,
+								setVacationDate,
+								availableDates,
+								setAvailableDates
+							)}
 						/>
 						<p className="itens-center self-center"> ~ </p>
 						<input
 							name="end"
 							className="h-12 text-xl bg-slate-200 px-3 py-2 focus:outline-none focus:ring-2"
 							type="date"
-							min={vacationMinDate}
-							onChange={handlerVacationDate(index, vacationDate, setVacationDate)}
+							min={availableDates[index]}
+							onChange={handlerVacationDate(
+								index,
+								vacationDate,
+								setVacationDate,
+								availableDates,
+								setAvailableDates
+							)}
 						/>
 					</div>
 				</div>

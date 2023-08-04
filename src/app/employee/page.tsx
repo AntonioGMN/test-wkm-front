@@ -21,7 +21,6 @@ export default function Home() {
 		},
 	]);
 
-	console.log(formData);
 	console.log(vacationDate);
 
 	return (
