@@ -4,7 +4,7 @@ import vacationMinimumDate from "@/utils/vacationAvailableDate";
 import { Dispatch, InputHTMLAttributes, SetStateAction, useState } from "react";
 import { VacationDate } from "../interfaces/vacationDate";
 import handlerVacationDate from "@/utils/handlerVacationDate";
-import handlerVacationQuantity from "@/utils/handlerVacationQuantity";
+import handlerVacationPeriodsQuantity from "@/utils/handlerVacationQuantity";
 import dayjs from "dayjs";
 
 interface VacationInputsProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -19,29 +19,37 @@ export function VacationInputs({
 	setVacationDate,
 }: VacationInputsProps) {
 	const vacationMinDate = vacationMinimumDate(hireDate);
-	const [vacationQuantity, setVacationQuantity] = useState(1);
+	const [vacationPeriodsQuantity, setVacationPeriodsQuantity] = useState(1);
 	const [countVacationDays, setCountVacationDays] = useState(0);
 	const [availableEndDates, setAvailableEndDates] = useState([]);
-	const [availableStartDates, setAvailableStartDates] = useState([
-		vacationMinDate,
-	]);
 
-	const handlerEndVacationDay = (index: number) => {
-		if (vacationQuantity === 1) {
-			const dateFormat = dayjs(vacationDate[index].start);
-			const availableDate = dateFormat.add(30, "days");
-			return availableDate.format("YYYY-MM-DD");
-		}
+	// const handlerEndVacationDay = (index: number) => {
+	// 	if (vacationQuantity === 1) {
+	// 		const dateFormat = dayjs(vacationDate[index].start);
+	// 		const availableDate = dateFormat.add(30, "days");
+	// 		return availableDate.format("YYYY-MM-DD");
+	// 	}
 
-		const diverences = vacationDate.map((v) => {
-			const start = dayjs(v.start);
-			const end = dayjs(v.end);
+	// 	const diverences = vacationDate.map((v) => {
+	// 		const start = dayjs(v.start);
+	// 		const end = dayjs(v.end);
 
-			const differenceInDays = end.diff(start, "day");
-			return differenceInDays;
-		});
+	// 		const differenceInDays = end.diff(start, "day");
+	// 		return differenceInDays;
+	// 	});
+	// };
 
-		console.log(diverences);
+	const handlerDisableStartInput = (index: number) => {
+		if (index == 0) return false;
+
+		if (vacationDate[index - 1].end === "") return true;
+		return false;
+	};
+
+	const handlerMinStartDate = (index: number) => {
+		if (index == 0) return vacationMinDate;
+
+		return vacationDate[index - 1].end;
 	};
 
 	return (
@@ -55,18 +63,16 @@ export function VacationInputs({
 					type="number"
 					min={1}
 					max={3}
-					value={vacationQuantity}
-					onChange={handlerVacationQuantity(
-						vacationQuantity,
-						setVacationQuantity,
+					value={vacationPeriodsQuantity}
+					onChange={handlerVacationPeriodsQuantity(
+						vacationPeriodsQuantity,
+						setVacationPeriodsQuantity,
 						vacationDate,
-						setVacationDate,
-						availableStartDates,
-						setAvailableStartDates
+						setVacationDate
 					)}
 				/>
 			</div>
-			{Array.from({ length: vacationQuantity }, (_, index) => (
+			{Array.from({ length: vacationDate.length }, (_, index) => (
 				<div key={index} className="flex justify-between">
 					<p className="text-2xl py-3 w-fit">{`${index + 1}° ferias:`}</p>
 					<div className="flex gap-3">
@@ -74,14 +80,13 @@ export function VacationInputs({
 							name="start"
 							className="h-12 text-xl bg-slate-200 px-3 py-2 focus:outline-none focus:ring-2"
 							type="date"
-							min={availableStartDates[index]}
-							disabled={availableStartDates[index] === undefined}
+							min={handlerMinStartDate(index)}
+							disabled={handlerDisableStartInput(index)}
 							onChange={handlerVacationDate(
 								index,
 								vacationDate,
 								setVacationDate,
-								availableStartDates,
-								setAvailableStartDates,
+
 								setCountVacationDays
 							)}
 						/>
@@ -96,8 +101,7 @@ export function VacationInputs({
 								index,
 								vacationDate,
 								setVacationDate,
-								availableStartDates,
-								setAvailableStartDates,
+
 								setCountVacationDays
 							)}
 						/>

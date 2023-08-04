@@ -1,14 +1,14 @@
 import { VacationDate } from "@/components/interfaces/vacationDate";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
-const handlerVacationQuantity =
+const handlerVacationPeriodsQuantity =
 	(
 		vacationQuantity: number,
 		setVacationQuantity: Dispatch<SetStateAction<any>>,
 		vacationDate: VacationDate[],
-		setVacationDate: Dispatch<SetStateAction<any>>,
-		availableDates: string[],
-		setAvailableDates: Dispatch<SetStateAction<any>>
+		setVacationDate: Dispatch<SetStateAction<any>>
+		// availableVacationStartDates: string[],
+		// setAvailableVacationStartDates: Dispatch<SetStateAction<any>>
 	) =>
 	(e: ChangeEvent<HTMLInputElement>) => {
 		const newVacationQuantity = parseInt(e.target.value);
@@ -17,14 +17,13 @@ const handlerVacationQuantity =
 			setVacationDate([...vacationDate, addVacationDate]);
 		}
 
-		if (newVacationQuantity < vacationQuantity) {
+		if (newVacationQuantity < vacationQuantity && vacationDate.length !== 1) {
+			console.log("netour");
 			vacationDate.pop();
-			availableDates.pop();
 			setVacationDate(vacationDate);
-			setAvailableDates(availableDates);
 		}
 
 		setVacationQuantity(newVacationQuantity);
 	};
 
-export default handlerVacationQuantity;
+export default handlerVacationPeriodsQuantity;
