@@ -1,64 +1,56 @@
 "use client";
 
 import { Container } from "@/components/Containers";
-import Form from "@/components/form";
-import { VacationDate } from "@/components/interfaces/vacationDate";
+import Form from "@/components/Form";
 import { H1 } from "@/components/Texts/h1";
-import { H2 } from "@/components/Texts/h2";
-import handlerInputChange from "@/utils/handlerInputChange";
+import { Vacations } from "@/components/Vacations";
+import createEmployee from "@/service.ts/createEmployee";
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import EmployeeSchema, { Employee } from "@/schemas/employees";
 import { useState } from "react";
 
 export default function Home() {
-	const [formData, setFormData] = useState({
-		name: "",
-		job: "",
-		hireDate: "",
-	});
-	const [vacationDate, setVacationDate] = useState<VacationDate[]>([
-		{
-			start: "",
-			end: "",
-		},
-	]);
+	const resolver = { resolver: zodResolver(EmployeeSchema) };
+	const createEmployeeForm = useForm<Employee>(resolver);
+	const {
+		handleSubmit,
+		getValues,
+		formState: { errors },
+	} = createEmployeeForm;
+	const [hireDate, setHireDate] = useState(getValues().hireDate);
 
-	console.log(vacationDate);
+	console.log(errors?.vacationDates?.[0]?.startDate);
 
 	return (
 		<Container.Main>
 			<Container.WhiteContainer>
 				<H1>Cadastre um colaborador</H1>
-				<Form.Container>
-					<Form.Box>
-						<Form.Input
-							name="name"
-							onChange={handlerInputChange(formData, setFormData)}
-							type="text"
-							label="Nome do colaborador"
-						/>
-						<Form.Input
-							name="job"
-							onChange={handlerInputChange(formData, setFormData)}
-							type="text"
-							label="Seu cargo"
-						/>
-						<Form.Input
-							name="hireDate"
-							onChange={handlerInputChange(formData, setFormData)}
-							type="date"
-							label="Data de entrada na empresa"
-						/>
-					</Form.Box>
-					{formData.hireDate !== "" && (
-						<>
-							<H2>Organize as ferias do colaborador</H2>
-							<Form.VacationInputs
-								hireDate={formData.hireDate}
-								vacationDate={vacationDate}
-								setVacationDate={setVacationDate}
-							/>
-						</>
-					)}
-				</Form.Container>
+				<FormProvider {...createEmployeeForm}>
+					<Form.Container onSubmit={handleSubmit(createEmployee)}>
+						<Form.Grid>
+							<Form.Box>
+								<Form.Input name="name" type="text" label="Nome do colaborador" />
+								<Form.ErrorMessage error={errors} type={"name"} />
+							</Form.Box>
+							<Form.Box>
+								<Form.Input name="job" type="text" label="Seu cargo" />
+								<Form.ErrorMessage error={errors} type={"job"} />
+							</Form.Box>
+							<Form.Box>
+								<Form.Input
+									name="hireDate"
+									type="date"
+									label="Data de entrada na empresa"
+									onChange={(e) => setHireDate(e.target.value)}
+								/>
+								<Form.ErrorMessage error={errors} type={"hireDate"} />
+							</Form.Box>
+						</Form.Grid>
+						<Vacations hireDate={hireDate} />
+						<Form.Button>Cadastra</Form.Button>
+					</Form.Container>
+				</FormProvider>
 			</Container.WhiteContainer>
 		</Container.Main>
 	);

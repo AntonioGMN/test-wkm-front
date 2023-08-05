@@ -1,4 +1,4 @@
-import { VacationDate } from "@/components/interfaces/vacationDate";
+import { VacationDate } from "@/Interfaces/vacationDate";
 import dayjs from "dayjs";
 import { Dispatch, SetStateAction } from "react";
 
@@ -6,14 +6,12 @@ const countVacationDay = (
 	vacationDate: VacationDate[],
 	setCountVacationDays: Dispatch<SetStateAction<any>>
 ) => {
-	const countedDays = vacationDate.map(({ start, end }) => {
-		if (start === "" || end === "") return 0;
+	const countedDays = vacationDate.map(({ startDate, endDate }) => {
+		if (startDate === "" || endDate === "") return 0;
 
-		const differenceInDays = dayjs(end).diff(dayjs(start), "day") + 1;
+		const differenceInDays = dayjs(endDate).diff(dayjs(startDate), "day") + 1;
 		return differenceInDays;
 	});
-
-	console.log(countedDays);
 
 	setCountVacationDays(countedDays);
 };
