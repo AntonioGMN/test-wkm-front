@@ -7,8 +7,9 @@ import { Vacations } from "@/components/Vacations";
 import createEmployee from "@/service.ts/createEmployee";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import EmployeeSchema, { Employee } from "@/schemas/employees";
+import EmployeeSchema from "@/schemas/employees";
 import { useState } from "react";
+import { Employee } from "@/Interfaces/employee";
 
 export default function Home() {
 	const resolver = { resolver: zodResolver(EmployeeSchema) };
@@ -20,7 +21,7 @@ export default function Home() {
 	} = createEmployeeForm;
 	const [hireDate, setHireDate] = useState(getValues().hireDate);
 
-	console.log(errors?.vacationDates?.[0]?.startDate);
+	console.log(getValues());
 
 	return (
 		<Container.Main>

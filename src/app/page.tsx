@@ -3,7 +3,7 @@ import LinkAddEmployee from "@/components/Links/addEmployee";
 import Table from "@/components/Table";
 import { H1 } from "@/components/Texts/h1";
 
-export default function Home() {
+export default async function Home() {
 	return (
 		<Container.Main>
 			<Container.WhiteContainer>

@@ -14,8 +14,6 @@ const handlerVacationDate =
 			vacationDate[index].startDate = e.target.value;
 		else vacationDate[index].endDate = e.target.value;
 
-		console.log("vacationDate ", vacationDate);
-
 		setVacationDate([...vacationDate]);
 		countVacationDay([...vacationDate], setCountVacationDays);
 	};

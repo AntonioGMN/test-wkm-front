@@ -3,6 +3,6 @@ import api from ".";
 
 export default async function createEmployee(employee: Employee) {
 	const response = await api.post("/employees", employee);
-	console.log(response.data);
+	console.log(response);
 	return response;
 }

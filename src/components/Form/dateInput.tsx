@@ -1,4 +1,4 @@
-import EmployeeSchema, { Employee } from "@/schemas/employees";
+import { Employee } from "@/Interfaces/employee";
 import { InputHTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -14,14 +14,12 @@ export function DateInput({ index, typeDate, ...props }: InputProps) {
 	} = useFormContext<Employee>();
 	const registeType =
 		typeDate === "startDate"
-			? { ...register(`vacationDates.${index}.startDate`) }
-			: { ...register(`vacationDates.${index}.endDate`) };
+			? { ...register(`vacations.${index}.startDate`) }
+			: { ...register(`vacations.${index}.endDate`) };
 
-	console.log(typeDate);
-
-	let errorType = errors?.vacationDates?.[index]?.startDate?.message;
+	let errorType = errors?.vacations?.[index]?.startDate?.message;
 	if (typeDate !== "startDate") {
-		errorType = errors?.vacationDates?.[index]?.endDate?.message;
+		errorType = errors?.vacations?.[index]?.endDate?.message;
 	}
 
 	return (

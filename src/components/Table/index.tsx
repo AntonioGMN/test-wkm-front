@@ -1,6 +1,12 @@
+import getEmployees from "@/service.ts/getEmployees";
 import { PropsWithChildren } from "react";
 
-export default function Table() {
+export default async function Table() {
+	const employees = await getEmployees();
+	console.log(employees);
+
+	if (employees === undefined) return "";
+
 	return (
 		<div className="w-full max-h-ocupation overflow-y-auto mt-3">
 			<table className="w-full table-auto rounded-t-lg ">
@@ -13,90 +19,20 @@ export default function Table() {
 					</tr>
 				</thead>
 				<tbody>
-					<TR>
-						<TD>The Sliding Mr. Bones (Next Stop, Pottersville)</TD>
-						<TD>Malcolm Lockyer</TD>
-						<TD>1961</TD>
-						<TD>1961</TD>
-					</TR>
-					<TR>
-						<TD>Witchy Woman</TD>
-						<TD>The Eagles</TD>
-						<TD>1972</TD>
-						<TD>1972</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
-					<TR>
-						<TD>Shining Star</TD>
-						<TD>Earth, Wind, and Fire</TD>
-						<TD>1975</TD>
-						<TD>1975</TD>
-					</TR>
+					{employees.map((employee) => (
+						<TR key={employee.id}>
+							<TD>{employee.name}</TD>
+							<TD>{employee.job}</TD>
+							<TD>{employee.hireDate}</TD>
+							<TD>
+								{employee.vacations.map((vacation) => (
+									<p key={vacation.startDate}>
+										{vacation.startDate} ~ {vacation.endDate}
+									</p>
+								))}
+							</TD>
+						</TR>
+					))}
 				</tbody>
 			</table>
 		</div>
@@ -116,5 +52,5 @@ function TR({ children }: PropsWithChildren) {
 }
 
 function TD({ children }: PropsWithChildren) {
-	return <td className="py-3 h-7 max-w-xs tracking-wide">{children}</td>;
+	return <td className="py-3 h-7 max-w-xs tracking-wide ">{children}</td>;
 }
