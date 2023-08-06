@@ -17,6 +17,8 @@ export function VacationsInputs({ hireDate }: VacationInputsProps) {
 	const [countVacationDays, setCountVacationDays] = useState([0]);
 	const { vacationDate, setVacationDate } = useVacation();
 
+	console.log(vacationDate);
+
 	return (
 		<>
 			{Array.from({ length: vacationDate.length }, (_, index) => (

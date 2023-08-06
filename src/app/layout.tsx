@@ -1,9 +1,7 @@
-import VacationPeriods from "@/components/Vacations/periods";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import VacationProvider from "../contexts/vacationContext";
-import QueryProvider from "../contexts/useQueryContext";
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +17,9 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="pt-br">
-			<VacationProvider>
-				<QueryProvider>
-					<body className={inter.className}>{children}</body>
-				</QueryProvider>
-			</VacationProvider>
+			<body className={inter.className}>
+				<Providers>{children}</Providers>
+			</body>
 		</html>
 	);
 }
