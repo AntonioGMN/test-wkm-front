@@ -3,7 +3,7 @@ import formatDate from "@/utils/formatDate";
 import { PropsWithChildren } from "react";
 
 export default async function Table() {
-	const employees = [];
+	const employees = await getEmployees();
 
 	if (employees.length === 0)
 		return (
@@ -15,7 +15,7 @@ export default async function Table() {
 		);
 
 	return (
-		<div className="w-full max-h-ocupation overflow-y-auto mt-3">
+		<div className="w-full h-full max-h-ocupation overflow-y-auto mt-3">
 			<table className="w-full table-auto">
 				<thead className="w-full sticky top-0 z-1 ">
 					<tr className="bg-slate-400 rounded-t-lg">
@@ -26,7 +26,7 @@ export default async function Table() {
 					</tr>
 				</thead>
 				<tbody>
-					{/* {employees.map(({ id, name, job, hireDate, vacations }) => (
+					{employees.map(({ id, name, job, hireDate, vacations }) => (
 						<TR key={id}>
 							<TD>{name}</TD>
 							<TD>{job}</TD>
@@ -39,7 +39,7 @@ export default async function Table() {
 								))}
 							</TD>
 						</TR>
-					))} */}
+					))}
 				</tbody>
 			</table>
 		</div>

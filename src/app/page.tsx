@@ -1,5 +1,5 @@
 import { Container } from "@/components/Containers";
-import LinkAddEmployee from "@/components/Links/addEmployee";
+import LinkButton from "@/components/Links/linkButton";
 import Table from "@/components/Table";
 import { H1 } from "@/components/Texts/h1";
 
@@ -9,7 +9,7 @@ export default async function Home() {
 			<Container.WhiteContainer>
 				<Container.Box>
 					<H1>Colaboradores</H1>
-					<LinkAddEmployee />
+					<LinkButton href="/employees">Adicionar</LinkButton>
 				</Container.Box>
 				<Table />
 			</Container.WhiteContainer>

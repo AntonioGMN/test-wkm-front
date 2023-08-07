@@ -11,14 +11,17 @@ import {
 import { VacationDate } from "../Interfaces/vacationDate";
 
 interface VacationContextProps {
-	vacationDate: VacationDate[];
-	setVacationDate: Dispatch<SetStateAction<any>>;
+	vacations: VacationDate[];
+	setVacations: Dispatch<SetStateAction<any>>;
+	vacationPeriodsQuantity: number;
+	setVacationPeriodsQuantity: Dispatch<SetStateAction<any>>;
 }
 
 const VacationContext = createContext({} as VacationContextProps);
 
 export default function VacationProvider({ children }: PropsWithChildren) {
-	const [vacationDate, setVacationDate] = useState<VacationDate[]>([
+	const [vacationPeriodsQuantity, setVacationPeriodsQuantity] = useState(1);
+	const [vacations, setVacations] = useState<VacationDate[]>([
 		{
 			startDate: "",
 			endDate: "",
@@ -26,10 +29,17 @@ export default function VacationProvider({ children }: PropsWithChildren) {
 	]);
 
 	return (
-		<VacationContext.Provider value={{ vacationDate, setVacationDate }}>
+		<VacationContext.Provider
+			value={{
+				vacations,
+				setVacations,
+				vacationPeriodsQuantity,
+				setVacationPeriodsQuantity,
+			}}
+		>
 			{children}
 		</VacationContext.Provider>
 	);
 }
 
-export const useVacation = () => useContext(VacationContext);
+export const useVacationContext = () => useContext(VacationContext);

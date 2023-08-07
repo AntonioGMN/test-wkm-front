@@ -4,12 +4,14 @@ import { Container } from "@/components/Containers";
 import Form from "@/components/Form";
 import { H1 } from "@/components/Texts/h1";
 import { Vacations } from "@/components/Vacations";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import EmployeeSchema from "@/schemas/employees";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Employee } from "@/Interfaces/employee";
-import UseCreateEmployee from "@/hooks/employees/useCreateEmployee";
+import UseCreateEmployee from "@/hooks/employees/createEmployee";
+import LinkButton from "@/components/Links/linkButton";
+import { useVacationContext } from "@/contexts/vacationContext";
 
 export default function Home() {
 	const resolver = { resolver: zodResolver(EmployeeSchema) };
@@ -48,7 +50,10 @@ export default function Home() {
 							</Form.Box>
 						</Form.Grid>
 						<Vacations hireDate={hireDate} />
-						<Form.Button>Cadastra</Form.Button>
+						<Form.BoxRelative>
+							<LinkButton href="/">Cancelar</LinkButton>
+							<Form.Button>Cadastra</Form.Button>
+						</Form.BoxRelative>
 					</Form.Container>
 				</FormProvider>
 			</Container.WhiteContainer>

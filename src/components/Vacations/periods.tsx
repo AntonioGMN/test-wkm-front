@@ -1,12 +1,12 @@
-import { useVacation } from "@/contexts/vacationContext";
-import handlerVacationPeriodsQuantity from "@/hooks/vacations/handlerVacationQuantity";
+import { useVacationContext } from "@/contexts/vacationContext";
+import UseVacationPeriodsQuantity from "@/hooks/vacations/handlerVacationQuantity";
 
 export default function VacationPeriods() {
-	const { vacationDate, setVacationDate } = useVacation();
-	const vacationPeriodsQuantity = vacationDate.length;
+	const { vacationPeriodsQuantity } = useVacationContext();
+	const { handlerVacationPeriodsQuantity } = UseVacationPeriodsQuantity();
 
 	return (
-		<div className="flex">
+		<div className="flex items-center justify-between">
 			<label className="w-2/3 text-2xl py-3">
 				Em quantos periodos gostaria de dividir as férias?
 			</label>
@@ -16,7 +16,7 @@ export default function VacationPeriods() {
 				min={1}
 				max={3}
 				value={vacationPeriodsQuantity}
-				onChange={handlerVacationPeriodsQuantity(vacationDate, setVacationDate)}
+				onChange={handlerVacationPeriodsQuantity}
 			/>
 		</div>
 	);

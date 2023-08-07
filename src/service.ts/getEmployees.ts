@@ -7,8 +7,6 @@ interface RecevedeEmployee extends Employee {
 }
 
 export default async function getEmployees(): Promise<RecevedeEmployee[]> {
-	console.log("/////////////////////////////////");
-	console.log("pegou");
 	const response: AxiosResponse<RecevedeEmployee[]> = await api.get(
 		"/employees"
 	);

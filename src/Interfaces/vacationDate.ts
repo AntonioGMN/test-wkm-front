@@ -1,4 +1,4 @@
-export interface VacationDate {
+export default interface VacationDate {
 	startDate: string;
 	endDate: string;
 }

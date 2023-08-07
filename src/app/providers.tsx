@@ -12,9 +12,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 		<CacheProvider>
 			<ChakraProvider>
 				<AlertContextProvider>
-					<VacationProvider>
-						<QueryProvider>{children}</QueryProvider>
-					</VacationProvider>
+					<QueryProvider>
+						<VacationProvider>{children}</VacationProvider>
+					</QueryProvider>
 				</AlertContextProvider>
 			</ChakraProvider>
 		</CacheProvider>

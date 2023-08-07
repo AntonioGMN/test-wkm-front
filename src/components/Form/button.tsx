@@ -6,7 +6,7 @@ export default function SubmitButtom(props: ButtonProps) {
 	return (
 		<button
 			type="submit"
-			className="h-12 w-fit mt-3 px-6 text-white text-xl text-center absolute bottom-0 right-0 font-medium bg-blue-500 rounded-full"
+			className="h-12 w-fit px-6 text-white text-xl text-center font-medium bg-blue-500 rounded-full flex items-center"
 			{...props}
 		/>
 	);

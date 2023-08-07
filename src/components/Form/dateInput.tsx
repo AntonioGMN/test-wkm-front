@@ -25,7 +25,7 @@ export function DateInput({ index, typeDate, ...props }: InputProps) {
 	return (
 		<div className="flex flex-col">
 			<input
-				className="h-12 text-xl bg-slate-200 px-3 py-2 focus:outline-none focus:ring-2"
+				className="h-12 w-44 text-xl bg-slate-200 px-3 py-2 focus:outline-none focus:ring-2"
 				type="date"
 				{...registeType}
 				{...props}
