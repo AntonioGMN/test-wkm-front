@@ -3,13 +3,13 @@
 ### 1- Clone esse repositório
 
 ```
-[git clone https://github.com/AntonioGMN/tegrafood-front.git](https://github.com/AntonioGMN/test-wkm-front.git)
+git clone https://github.com/AntonioGMN/test-wkm-front.git
 ```
 
 ### 2- Clone o back-end desse repositório
 
 ```
-git clone https://github.com/AntonioGMN/tegrafood-back.git
+git clone https://github.com/AntonioGMN/test-WM-back.git
 ```
 
 ### 3- Crie um arquivo.env com:
