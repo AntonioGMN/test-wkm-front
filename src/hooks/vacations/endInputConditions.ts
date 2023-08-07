@@ -27,7 +27,6 @@ const UserEndInputConditions = (): UserEndInputCondicitionRetuTypes => {
 			return dayjs(endDate).diff(dayjs(startDate), "day") + 1;
 		});
 
-		console.log(vacationDaysByPeriods);
 		return dayjs(vacations[index].startDate).add(30, "days").format("YYYY-MM-DD");
 	};
 

@@ -21,7 +21,6 @@ const UseHandlerVacations = (): UseHandlerVacationsReturnType => {
 			}
 
 			setVacations(updatedVacations);
-			//countVacationDay(updatedVacations, setCountVacationDays);
 		};
 
 	return { handlerVacationDate };

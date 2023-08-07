@@ -56,7 +56,6 @@ export default function UseVacationsConditions(): {
 			return false;
 		}
 
-		// Se nenhuma das validações acima foi acionada, todas as validações foram bem-sucedidas
 		return true;
 	};
 
