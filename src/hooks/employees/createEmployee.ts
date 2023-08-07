@@ -21,8 +21,8 @@ export default function UseCreateEmployee() {
 			if (!validVacationConditions(employee.vacations)) return;
 
 			await api.post("/employees", employee);
+			showAlert("Colaborador cadastrado com sucesso", "success");
 			router.push("/");
-
 			return;
 		} catch (error) {
 			const customError = error as AxiosError<ErrorResponse>;
