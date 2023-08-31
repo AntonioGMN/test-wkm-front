@@ -1,11 +1,11 @@
 import VacationDate from "@/Interfaces/vacationDate";
-import { useAlert } from "@/contexts/alertContext";
+import UseAlert from "../useAlert";
 import dayjs from "dayjs";
 
 export default function UseVacationsConditions(): {
 	validVacationConditions: (vacations: VacationDate[]) => boolean;
 } {
-	const { showAlert } = useAlert();
+	const { showAlert } = UseAlert();
 
 	const validVacationConditions = (vacations: VacationDate[]): boolean => {
 		const vacationDaysForPeriod = vacations.map((v) => {

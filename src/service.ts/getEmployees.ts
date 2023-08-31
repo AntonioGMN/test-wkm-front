@@ -1,14 +1,21 @@
 import { Employee } from "@/Interfaces/employee";
-import api from ".";
-import { AxiosResponse } from "axios";
+import { revalidateTag } from "next/cache";
 
 interface RecevedeEmployee extends Employee {
 	id: number;
 }
 
 export default async function getEmployees(): Promise<RecevedeEmployee[]> {
-	const response: AxiosResponse<RecevedeEmployee[]> = await api.get(
-		"/employees"
-	);
-	return response.data;
+	const response = await fetch("http://localhost:4000/employees", {
+		next: { tags: ["employees"] },
+	});
+
+	if (!response.ok) {
+		throw new Error("Error fetching employees");
+	}
+
+	const employeesData: RecevedeEmployee[] = await response.json();
+	revalidateTag("employees");
+
+	return employeesData;
 }

@@ -12,7 +12,7 @@ interface VacationInputsProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function VacationsInputs({ hireDate }: VacationInputsProps) {
-	const { vacationPeriodsQuantity, vacations } = useVacationContext();
+	const { vacationPeriodsQuantity } = useVacationContext();
 	const { minStartDate, handlerDisableStartInput } = UseStartInputConditions();
 	const { minEndDate, maxEndDate, handlerDisableEndtInput } =
 		UserEndInputConditions();

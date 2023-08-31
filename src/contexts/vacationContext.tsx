@@ -8,7 +8,7 @@ import {
 	Dispatch,
 	SetStateAction,
 } from "react";
-import { VacationDate } from "../Interfaces/vacationDate";
+import VacationDate from "../Interfaces/vacationDate";
 
 interface VacationContextProps {
 	vacations: VacationDate[];

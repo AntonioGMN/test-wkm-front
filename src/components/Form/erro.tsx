@@ -1,17 +1,20 @@
-import { Employee } from "@/schemas/employees";
+import { Employee } from "@/Interfaces/employee";
 import React from "react";
-import { FieldErrors } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 interface ErrorProps {
-	error: FieldErrors<Employee>;
-	type: keyof Employee; // Usar "keyof Employee" para garantir que "type" seja uma chave válida em Employee
+	type: keyof Employee;
 }
 
-function ErrorMessage({ error, type }: ErrorProps) {
-	if (error[type] == undefined) return;
+function ErrorMessage({ type }: ErrorProps) {
+	const {
+		formState: { errors },
+	} = useFormContext<Employee>();
+
+	if (errors[type] == undefined) return;
 
 	return (
-		<span className="text-red-400 text-sm mt-2">{error[type]?.message}</span>
+		<span className="text-red-400 text-sm mt-2">{errors[type]?.message}</span>
 	);
 }
 
